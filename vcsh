@@ -99,6 +99,7 @@ help() {
 	echo "usage: $SELF <options> <command>
 
    options:
+   -b <path>		Set the base of the repository being cloned
    -c <file>            Source file
    -d                   Enable debug mode
    -v                   Enable verbose mode
