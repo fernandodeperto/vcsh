@@ -31,7 +31,7 @@ fatal() {
 # We need to run getops as soon as possible so we catch -d and other
 # options that will modify our behaviour.
 # Commands are handled at the end of this script.
-while getopts "c:dv" flag; do
+while getopts "bc:dv" flag; do
 	if [ x"$1" = x'-d' ] || [ x"$1" = x'--debug' ]; then
 		set -vx
 		VCSH_DEBUG=1
@@ -43,6 +43,10 @@ while getopts "c:dv" flag; do
 		echo "$SELF $VERSION"
 	elif [ x"$1" = x'-c' ]; then
 		VCSH_OPTION_CONFIG=$OPTARG
+	elif [ x"$1" = x'-b' ] || [ x"$1" = x'--base' ]; then
+		VCSH_BASE=$2
+		echo "new base set to $VCSH_BASE"
+		shift 1
 	fi
 	shift 1
 done
@@ -552,6 +556,7 @@ elif [ x"$VCSH_COMMAND" = x'delete' ]           ||
 	[ x"$VCSH_COMMAND" = x'rename' ] && { VCSH_REPO_NAME_NEW=$3; export VCSH_REPO_NAME_NEW;
 	                                      GIT_DIR_NEW=$VCSH_REPO_D/$VCSH_REPO_NAME_NEW.git; export GIT_DIR_NEW; }
 	[ x"$VCSH_COMMAND" = x'run' ]    && shift 2
+	VCSH_BASE=`git --git-dir $GIT_DIR config --get core.worktree`; #export VCSH_BASE
 elif [ x"$VCSH_COMMAND" = x'commit' ] ||
      [ x"$VCSH_COMMAND" = x'list'   ] ||
      [ x"$VCSH_COMMAND" = x'list-tracked' ] ||
