@@ -556,8 +556,8 @@ elif [ x"$VCSH_COMMAND" = x'delete' ]           ||
 	GIT_DIR=$VCSH_REPO_D/$VCSH_REPO_NAME.git; export GIT_DIR
 	[ x"$VCSH_COMMAND" = x'rename' ] && { VCSH_REPO_NAME_NEW=$3; export VCSH_REPO_NAME_NEW;
 	                                      GIT_DIR_NEW=$VCSH_REPO_D/$VCSH_REPO_NAME_NEW.git; export GIT_DIR_NEW; }
+	[ x"$VCSH_COMMAND" = x'delete' ] || [ x"$VCSH_COMMAND" = x'upgrade' ] && { VCSH_BASE=`git --git-dir $GIT_DIR config --get core.worktree`; } #export VCSH_BASE 
 	[ x"$VCSH_COMMAND" = x'run' ]    && shift 2
-	VCSH_BASE=`git --git-dir $GIT_DIR config --get core.worktree`; #export VCSH_BASE
 elif [ x"$VCSH_COMMAND" = x'commit' ] ||
      [ x"$VCSH_COMMAND" = x'list'   ] ||
      [ x"$VCSH_COMMAND" = x'list-tracked' ] ||
